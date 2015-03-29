@@ -33,11 +33,11 @@ func (store Store) GetById(id int64) (User, error) {
 }
 
 func (store Store) GetAll() ([]User, error) {
-	var user []User
+	var users []User
 
 	_, err := store.Database.Select(&users, "select * from users order by id")
 
-	return user, err
+	return users, err
 }
 
 func (store Store) Delete(user *User) (int64, error) {
