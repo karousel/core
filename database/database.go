@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 
+	"github.com/karousel/core/album"
 	"github.com/karousel/core/collection"
 
 	_ "github.com/lib/pq"
@@ -24,6 +25,12 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	collectionsTable.SetKeys(true, "id")
 	collectionsTable.ColMap("name").SetNotNull(true)
 	collectionsTable.ColMap("name").SetUnique(true)
+
+	albumsTable := databaseMap.AddTableWithName(album.Album{}, "albums")
+	albumsTable.SetKeys(true, "id")
+	albumsTable.ColMap("collection_id").SetNotNull(true)
+	albumsTable.ColMap("name").SetNotNull(true)
+	albumsTable.ColMap("name").SetUnique(true)
 
 	err = databaseMap.CreateTablesIfNotExists()
 
