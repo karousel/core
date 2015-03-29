@@ -70,7 +70,7 @@ func (store Store) GetFilesForPhoto(photo *Photo) ([]file.File, error) {
 func (store Store) GetMetadataForPhoto(photo *Photo) (metadata.Metadata, error) {
 	var metadata_ metadata.Metadata
 
-	_, err := store.Database.SelectOne(&metadata_, "select * from metadata where parent_id=$1", photo.Id)
+	err := store.Database.SelectOne(&metadata_, "select * from metadata where parent_id=$1", photo.Id)
 
 	return metadata_, err
 }
