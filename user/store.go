@@ -1,4 +1,4 @@
-package photo
+package user
 
 import (
 	gorp "gopkg.in/gorp.v1"
