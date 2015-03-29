@@ -5,6 +5,7 @@ import (
 
 	"github.com/karousel/core/album"
 	"github.com/karousel/core/collection"
+	"github.com/karousel/core/file"
 	"github.com/karousel/core/photo"
 
 	_ "github.com/lib/pq"
@@ -39,6 +40,11 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	photosTable.ColMap("name").SetNotNull(true)
 	photosTable.ColMap("uploaded").SetNotNull(true)
 	photosTable.ColMap("status").SetNotNull(true)
+
+	filesTable := databaseMap.AddTableWithName(file.File{}, "files")
+	filesTable.SetKeys(true, "id")
+	filesTable.ColMap("parent_id").SetNotNull(true)
+	filesTable.ColMap("checksum").SetNotNull(true)
 
 	err = databaseMap.CreateTablesIfNotExists()
 
