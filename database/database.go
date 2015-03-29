@@ -5,6 +5,7 @@ import (
 
 	"github.com/karousel/core/album"
 	"github.com/karousel/core/collection"
+	"github.com/karousel/core/photo"
 
 	_ "github.com/lib/pq"
 	gorp "gopkg.in/gorp.v1"
@@ -31,6 +32,13 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	albumsTable.ColMap("collection_id").SetNotNull(true)
 	albumsTable.ColMap("name").SetNotNull(true)
 	albumsTable.ColMap("name").SetUnique(true)
+
+	photosTable := databaseMap.AddTableWithName(photo.Photo{}, "photos")
+	photosTable.SetKeys(true, "id")
+	photosTable.ColMap("album_id").SetNotNull(true)
+	photosTable.ColMap("name").SetNotNull(true)
+	photosTable.ColMap("uploaded").SetNotNull(true)
+	photosTable.ColMap("status").SetNotNull(true)
 
 	err = databaseMap.CreateTablesIfNotExists()
 
