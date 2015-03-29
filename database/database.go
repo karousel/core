@@ -6,6 +6,7 @@ import (
 	"github.com/karousel/core/album"
 	"github.com/karousel/core/collection"
 	"github.com/karousel/core/file"
+	"github.com/karousel/core/metadata"
 	"github.com/karousel/core/photo"
 
 	_ "github.com/lib/pq"
@@ -45,6 +46,11 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	filesTable.SetKeys(true, "id")
 	filesTable.ColMap("parent_id").SetNotNull(true)
 	filesTable.ColMap("checksum").SetNotNull(true)
+
+	metadataTable := databaseMap.AddTableWithName(metadata.Metadata{}, "metadata")
+	metadataTable.SetKeys(true, "id")
+	metadataTable.ColMap("parent_id").SetNotNull(true)
+	metadataTable.ColMap("raw").SetNotNull(true)
 
 	err = databaseMap.CreateTablesIfNotExists()
 
