@@ -1,6 +1,8 @@
 package photo
 
 import (
+	"github.com/karousel/core/file"
+
 	gorp "gopkg.in/gorp.v1"
 )
 
@@ -54,4 +56,12 @@ func (store Store) Size() (int64, error) {
 	size, err := store.Database.SelectInt("select count(*) from photos")
 
 	return size, err
+}
+
+func (store Store) GetFilesForPhoto(photo *Photo) ([]file.File, error) {
+	var files []file.File
+
+	_, err := store.Database.Select(&files, "select * from files where parent_id=$1", photo.Id)
+
+	return files, err
 }
