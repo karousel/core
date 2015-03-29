@@ -10,6 +10,4 @@ type Photo struct {
 	Name        string
 	Uploaded    time.Time
 	Status      int
-	OriginalId  int64
-	ThumbnailId int64
 }
