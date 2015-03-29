@@ -1,5 +1,6 @@
 package collection
 
 type Collection struct {
-	Name string
+	Id   int64  `db:"id"`
+	Name string `db:"name"`
 }
