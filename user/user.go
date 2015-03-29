@@ -29,3 +29,9 @@ func NewUser(name string, emailAddress string, password string, administrator bo
 
 	return user, nil
 }
+
+func (u User) AuthenticateWithPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+
+	return (err == nil)
+}
