@@ -2,6 +2,7 @@ package photo
 
 import (
 	"github.com/karousel/core/file"
+	"github.com/karousel/core/metadata"
 
 	gorp "gopkg.in/gorp.v1"
 )
