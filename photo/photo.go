@@ -5,9 +5,9 @@ import (
 )
 
 type Photo struct {
-	Id          int64
-	AlbumId     int64
-	Name        string
-	Uploaded    time.Time
-	Status      int
+	Id       int64     `db:"id"`
+	AlbumId  int64     `db:"album_id"`
+	Name     string    `db:"name"`
+	Uploaded time.Time `db:"uploaded"`
+	Status   int       `db:"status"`
 }
