@@ -1,8 +1,8 @@
 package file
 
 type File struct {
-	Id         int64
-	ParentId   int64
-	Checksum   string
-	Resolution string
+	Id         int64  `db:"id"`
+	ParentId   int64  `db:"parent_id"`
+	Checksum   string `db:"checksum"`
+	Resolution string `db:"resolution"`
 }
