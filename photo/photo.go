@@ -9,5 +9,5 @@ type Photo struct {
 	AlbumId  int64     `db:"album_id"`
 	Name     string    `db:"name"`
 	Uploaded time.Time `db:"uploaded"`
-	Status   int       `db:"status"`
+	Status   int64     `db:"status"`
 }
