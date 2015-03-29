@@ -1,6 +1,8 @@
 package collection
 
 import (
+	"github.com/karousel/core/album"
+
 	gorp "gopkg.in/gorp.v1"
 )
 
@@ -54,4 +56,12 @@ func (store Store) Size() (int64, error) {
 	size, err := store.Database.SelectInt("select count(*) from collections")
 
 	return size, err
+}
+
+func (store Store) GetAlbumsForCollection(collection *Collection) ([]album.Album, error) {
+	var albums []album.Album
+
+	_, err := store.Database.Select(&albums, "select * from albums where collection_id=$1", collection.Id)
+
+	return albums, err
 }
