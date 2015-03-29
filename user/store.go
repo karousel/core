@@ -1,8 +1,6 @@
 package photo
 
 import (
-	"github.com/karousel/core/file"
-
 	gorp "gopkg.in/gorp.v1"
 )
 
