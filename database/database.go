@@ -8,6 +8,7 @@ import (
 	"github.com/karousel/core/file"
 	"github.com/karousel/core/metadata"
 	"github.com/karousel/core/photo"
+	"github.com/karousel/core/user"
 
 	_ "github.com/lib/pq"
 	gorp "gopkg.in/gorp.v1"
@@ -51,6 +52,14 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	metadataTable.SetKeys(true, "id")
 	metadataTable.ColMap("parent_id").SetNotNull(true)
 	metadataTable.ColMap("raw").SetNotNull(true)
+
+	usersTable := databaseMap.AddTableWithName(user.User{}, "users")
+	usersTable.SetKeys(true, "id")
+	usersTable.ColMap("email_address").SetNotNull(true)
+	usersTable.ColMap("email_address").SetUnique(true)
+	usersTable.ColMap("password").SetNotNull(true)
+	usersTable.ColMap("name").SetNotNull(true)
+	usersTable.ColMap("is_administrator").SetNotNull(true)
 
 	err = databaseMap.CreateTablesIfNotExists()
 
