@@ -30,6 +30,14 @@ func (store Store) GetById(id int64) (Token, error) {
 	return token, err
 }
 
+func (store Store) GetByToken(value string) (Token, error) {
+	var token Token
+
+	err := store.Database.SelectOne(&token, "select * from tokens where token=$1", value)
+
+	return token, err
+}
+
 func (store Store) GetAll() ([]Token, error) {
 	var tokens []Token
 
