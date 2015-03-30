@@ -8,6 +8,7 @@ import (
 	"github.com/karousel/core/file"
 	"github.com/karousel/core/metadata"
 	"github.com/karousel/core/photo"
+	"github.com/karousel/core/token"
 	"github.com/karousel/core/user"
 
 	_ "github.com/lib/pq"
@@ -60,6 +61,13 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	usersTable.ColMap("password").SetNotNull(true)
 	usersTable.ColMap("name").SetNotNull(true)
 	usersTable.ColMap("is_administrator").SetNotNull(true)
+
+	tokensTable := databaseMap.AddTableWithName(token.Token{}, "tokens")
+	tokensTable.SetKeys(true, "id")
+	tokensTable.ColMap("user_id").SetNotNull(true)
+	tokensTable.ColMap("expires").SetNotNull(true)
+	tokensTable.ColMap("token").SetNotNull(true)
+	tokensTable.ColMap("token").SetUnique(true)
 
 	err = databaseMap.CreateTablesIfNotExists()
 
