@@ -1,6 +1,8 @@
 package user
 
 import (
+	"github.com/karousel/core/token"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -34,4 +36,14 @@ func (u User) AuthenticateWithPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 
 	return (err == nil)
+}
+
+func (u User) NewAuthenticationToken() (token.Token, error) {
+	token, err := token.NewTokenForUserId(u.Id)
+
+	if err != nil {
+		return token, err
+	}
+
+	return token, nil
 }
