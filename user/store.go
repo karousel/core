@@ -1,6 +1,7 @@
 package user
 
 import (
+	"github.com/karousel/core/token"
 	gorp "gopkg.in/gorp.v1"
 )
 
@@ -54,4 +55,12 @@ func (store Store) Size() (int64, error) {
 	size, err := store.Database.SelectInt("select count(*) from users")
 
 	return size, err
+}
+
+func (store Store) GetTokensForUser(user *User) ([]token.Token, error) {
+	var tokens []token.Token
+
+	_, err := store.Database.Select(&tokens, "select * from tokens where user_id=$1", user.Id)
+
+	return tokens, err
 }
