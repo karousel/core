@@ -1,4 +1,4 @@
-box: wercker/go
+box: wercker/golang
 
 build:
     steps:
