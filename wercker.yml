@@ -1,9 +1,0 @@
-box: wercker/golang
-
-build:
-    steps:
-        - setup-go-workspace
-        - go get github.com/lib/pq
-        - go get gopkg.in/gorp.v1
-        - go get github.com/stretchr/testify/assert
-        - go test ./...
