@@ -15,16 +15,21 @@ import (
 	gorp "gopkg.in/gorp.v1"
 )
 
-func NewDatabase(datasource string) (*gorp.DbMap, error) {
+type Database struct {
+	Connection *gorp.DbMap
+}
+
+func NewDatabase(datasource string) (Database, error) {
+	var database Database
 	var databaseMap *gorp.DbMap
 
-	database, err := sql.Open("postgres", datasource)
+	sqlConnection, err := sql.Open("postgres", datasource)
 
 	if err != nil {
-		return databaseMap, err
+		return database, err
 	}
 
-	databaseMap = &gorp.DbMap{Db: database, Dialect: gorp.PostgresDialect{}}
+	databaseMap = &gorp.DbMap{Db: sqlConnection, Dialect: gorp.PostgresDialect{}}
 
 	collectionsTable := databaseMap.AddTableWithName(collection.Collection{}, "collections")
 	collectionsTable.SetKeys(true, "id")
@@ -72,8 +77,10 @@ func NewDatabase(datasource string) (*gorp.DbMap, error) {
 	err = databaseMap.CreateTablesIfNotExists()
 
 	if err != nil {
-		return databaseMap, err
+		return database, err
 	}
 
-	return databaseMap, nil
+	database.Connection = databaseMap
+
+	return database, nil
 }
